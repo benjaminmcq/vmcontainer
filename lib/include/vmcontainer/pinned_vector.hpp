@@ -235,7 +235,7 @@ public:
       _storage.resize(size() * sizeof(T));
     }
   }
-  auto page_size() const noexcept -> std::size_t { return _storage.page_size(); }
+  static auto const page_size() const noexcept -> std::size_t { return storage_type::page_size(); }
 
   // Modifiers
 
@@ -417,10 +417,10 @@ private:
   auto grow_if_necessary(std::size_t n) -> void
   {
     assert(max_size() - size() >= n);
-    auto const new_size = size() + n;
+    std::size_t const new_size = size() + n;
     if(new_size > capacity())
     {
-      auto const new_cap = capacity() * Traits::growth_factor::num / Traits::growth_factor::den;
+      std::size_t const new_cap = capacity() * Traits::growth_factor::num / Traits::growth_factor::den;
       reserve(std::min(max_size(), std::max(new_cap, new_size)));
     }
   }
