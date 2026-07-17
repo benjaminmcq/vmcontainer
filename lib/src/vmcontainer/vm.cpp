@@ -39,7 +39,7 @@ auto mknejp::vmcontainer::vm::system_default::reserve(std::size_t num_bytes) -> 
   }
   return offset;
 #else
-  auto const offset = ::mmap(nullptr, num_bytes, PROT_NONE, MAP_ANON | MAP_PRIVATE, 0, 0);
+  auto const offset = ::mmap(nullptr, num_bytes, PROT_NONE, MAP_ANON | MAP_PRIVATE, -1, 0);
   if(offset == MAP_FAILED)
   {
     VMCONTAINER_THROW_OR_ABORT(
